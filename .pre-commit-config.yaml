@@ -1,0 +1,56 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0  # Specify a stable version
+    # This repo provides general-purpose hooks for various file types.
+    hooks:
+      - id: check-yaml
+        # Checks for valid YAML syntax in .yaml and .yml files.
+      - id: check-added-large-files
+        # Prevents committing large files to the repository.
+      - id: end-of-file-fixer
+        # Ensures that text files end with a newline character.
+        # Applies to all text-based files.
+      - id: trailing-whitespace
+        # Removes unnecessary trailing whitespace at the end of lines.
+        # Applies to all text-based files.
+
+  - repo: https://github.com/psf/black
+    rev: 24.4.2  # Specify a stable version
+    # The uncompromising Python code formatter.
+    # Automatically formats Python (.py) files to adhere to the Black style.
+    hooks:
+      - id: black
+        language_version: python3
+        args: [--line-length=88]  # Set black's line length
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.0.0  # Specify a stable version
+    # A wrapper around PyFlakes, pycodestyle (PEP 8), and McCabe.
+    # Lints Python (.py) files for stylistic errors and potential bugs.
+    hooks:
+      - id: flake8
+        language_version: python3
+        additional_dependencies:
+          - pyproject-toml  # To make Flake8 aware of pyproject.toml for config
+          - pep8-naming     # Checks for PEP 8 compliant variable and function names
+        args: [--max-line-length=88, --ignore=E501] # Set flake8's line length and ignore E501
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.17.0  # Specify a stable version
+    # Automatically upgrades Python syntax for newer versions.
+    # Targets Python (.py) files.
+    hooks:
+      - id: pyupgrade
+        args: [--keep-runtime-typing]
+        language_version: python3
+
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.13.2  # Specify a stable version
+    # Automatically sorts Python imports alphabetically and separates them.
+    # Targets Python (.py) files.
+    hooks:
+      - id: isort
+        args: ["--profile", "black"]
+        language_version: python3
