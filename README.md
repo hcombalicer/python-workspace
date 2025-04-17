@@ -5,7 +5,7 @@ Python Codes for Google Workspace
 1. `git status`
 2. `git add .` (add all the files in the current directory) / git add <filename1> <filename1>
 3. `git commit -m "Your concise commit message here"`
-4. a pre-commit check should run to check the staged items. You can only proceed if all the checks are passed.
+4. A pre-commit check should run to check the staged items. You can only proceed if all the checks are passed. If a file has been updated or modified automatically by the linter, you need to run again `git add .` to ensure that the changes is applied on your next `git commit`.
 5. `git push`
 
 ## Developing locally
