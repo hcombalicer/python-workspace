@@ -28,4 +28,7 @@ jobs:
                 TEST_SHEETID: ${{ vars.TEST_SHEETID }}
 
             - name: Test the binary
-              run: python main.py
+              run: |
+                cd sheets/
+                pwd
+                python main.py
