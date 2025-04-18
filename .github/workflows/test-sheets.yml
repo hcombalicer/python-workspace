@@ -1,0 +1,31 @@
+name: Test workflow for sheet api
+
+on:
+    workflow_dispatch:
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v4
+
+            - name: Set up Python
+              uses: actions/setup-python@v5
+
+            - name: Install dependencies
+              run: |
+                cd sheets/
+                python -m pip install --upgrade pip
+                pip install -r requirements.txt
+
+            - name: Set up environment variables
+              run: |
+                echo "Deploying variables ..."
+              env:
+                API_KEY: ${{ secrets.SA_PYTHON_SHEET }}
+                TEST_SHEETID: ${{ vars.TEST_SHEETID }}
+
+            - name: Test the binary
+              run: python main.py
