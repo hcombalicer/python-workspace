@@ -1,5 +1,5 @@
 # python-workspace  
-[![Lint Code Base](https://github.com/hcombalicer/python-workspace/actions/workflows/super-linter.yml/badge.svg?branch=main)](https://github.com/hcombalicer/python-workspace/actions/workflows/super-linter.yml)  
+[![Lint Code Base](https://github.com/hcombalicer/python-workspace/actions/workflows/super-linter.yml/badge.svg?branch=main)](https://github.com/hcombalicer/python-workspace/actions/workflows/super-linter.yml)  [![Test workflow for sheet api](https://github.com/hcombalicer/python-workspace/actions/workflows/test-sheets.yml/badge.svg)](https://github.com/hcombalicer/python-workspace/actions/workflows/test-sheets.yml)  
 Python Codes for Google Workspace
 
 ## Developing in codespace
