@@ -1,4 +1,5 @@
-# python-workspace
+# python-workspace  
+[![Lint Code Base](https://github.com/hcombalicer/python-workspace/actions/workflows/super-linter.yml/badge.svg?branch=main)](https://github.com/hcombalicer/python-workspace/actions/workflows/super-linter.yml)  
 Python Codes for Google Workspace
 
 ## Developing in codespace
