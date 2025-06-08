@@ -1,2 +1,3 @@
 .python-api
+.selenium
 __pycache__
