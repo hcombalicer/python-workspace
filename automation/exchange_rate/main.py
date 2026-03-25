@@ -23,12 +23,13 @@ import argparse
 import os
 import sys
 import unittest
+from typing import Optional
 
 import telebot
 from google import genai
 
 
-def get_exchange_rate() -> float | None:
+def get_exchange_rate() -> Optional[float]:
     """
     Fetches the current USD to PHP exchange rate using Gemini AI.
 

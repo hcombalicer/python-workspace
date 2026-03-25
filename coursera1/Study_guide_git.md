@@ -5,9 +5,9 @@ the working tree, and the staging area. This study guide provides some
 basic concepts and commands that can help you get started with Git as
  well as guidelines to help you write an effective commit message.
 
-### Git config command
+## Git config command
 
-The Git config command is used to set the values to identify who made changes to Git repositories. To set the values of user.email and user.name to your email and name, type: 
+The Git config command is used to set the values to identify who made changes to Git repositories. To set the values of user.email and user.name to your email and name, type:
 
 `: ~$ git config  - -global user.email “me@example.com”`
 
@@ -74,8 +74,7 @@ and provides detailed information about the change. It can include
 references to bugs or issues that will be fixed with the change.
 It also can include links to more information when relevant.
 
-Click the link to review an example of a commit message:
-https://commit.style/
+Click the link to review an example of a commit [message](https://commit.style/)
 
 ### Key takeaways
 
@@ -86,7 +85,7 @@ Knowing basic Git commands and guidelines for writing better messages can help y
 | Command | Explanation & Link |
 | --- | --- |
 | git commit -a | [git commit -a](git commit -a) automaticallystages the files that have been locally modified. New files which have not been published yet are not affected. |
-| git log -p | [git log -p](git log -p) produces patch text that displays the lines of code that were changed in each commit in the current repo. |
+| git log -p | [git log -p](git log -p) produces patch text that displays the lines of code that were changed in each commit in the current repository. |
 | git show | [git show](git show) shows you one or more object(s) such as blobs, trees, tags, and commits. |
 | git diff | [git diff](git diff) is similar to the Linux `diff` command, and can show the changes between commits, changes between the working tree and index, changes between two trees, changes from a merge, and so on. |
 | git diff --staged | [git diff --staged](git diff --staged) is an alias of |
@@ -136,7 +135,7 @@ are not ready to stage those files. You could use the command `git reset`
 to undo the staging of your files.
 
 There are some other useful articles online, which discuss more aggressive
-approaches to [resetting the repo](https://jwiegley.github.io/git-from-the-bottom-up/3-Reset/4-doing-a-hard-reset.html)
+approaches to [resetting the repository](https://jwiegley.github.io/git-from-the-bottom-up/3-Reset/4-doing-a-hard-reset.html)
 (Git repository). As discussed in this article, doing a hard reset can
 be extremely dangerous. With a hard reset, you run the risk of losing your
 local changes. There are safer ways to achieve the same effect. For example,
@@ -174,7 +173,7 @@ same SHA-1 hash, which means that SHA-1 can be used for two things:
 * Serving as an identifier for the file itself (a token or fingerprint).
 
 Git calculates a hash for every commit. Those hashes are displayed by
-commands like `git log` or in various pages on Github. For commands
+commands like `git log` or in various pages on GiHhub. For commands
 like `git revert`, you can then use the hash to refer to a specific commit.
 
 Feel free to read more here:
