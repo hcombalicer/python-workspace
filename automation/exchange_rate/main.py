@@ -119,6 +119,9 @@ if __name__ == "__main__":
         args = parser.parse_args()
 
         current_rate = get_exchange_rate()
+        if current_rate is None:
+            print("Skipping check: Could not retrieve current exchange rate.")
+            sys.exit(0)  # Exit gracefully
         print(f"Rate: {current_rate} | Target: {args.threshold}")
 
         if check_and_notify(current_rate, args.threshold):
