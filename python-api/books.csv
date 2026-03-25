@@ -1,0 +1,23 @@
+book_id,title,author,isbn,publication_year,genre,stock_quantity,price
+B001,"The Hitchhiker's Guide to the Galaxy","Douglas Adams",978-0345391803,1979,"Science Fiction",15,12.99
+B002,"Pride and Prejudice","Jane Austen",978-0141439518,1813,"Romance",22,9.50
+B003,"To Kill a Mockingbird","Harper Lee",978-0446310789,1960,"Fiction",18,11.75
+B004,"1984","George Orwell",978-0451524935,1949,"Dystopian",10,10.20
+B005,"The Lord of the Rings","J.R.R. Tolkien",978-0618260274,1954,"Fantasy",8,25.50
+B006,"The Da Vinci Code","Dan Brown",978-0307277671,2003,"Thriller",30,14.00
+B007,"Harry Potter and the Sorcerer's Stone","J.K. Rowling",978-0590353403,1997,"Fantasy",25,16.99
+B008,"The Catcher in the Rye","J.D. Salinger",978-0316769174,1951,"Literary Fiction",12,10.90
+B009,"Gone Girl","Gillian Flynn",978-0307588361,2012,"Mystery",20,13.25
+B010,"The Great Gatsby","F. Scott Fitzgerald",978-0743273565,1925,"Classic",17,11.50
+B011,"Little Women","Louisa May Alcott",978-0316043991,1868,"Historical Fiction",14,9.75
+B012,"The Martian","Andy Weir",978-0804139021,2014,"Science Fiction",28,15.00
+B013,"The Girl with the Dragon Tattoo","Stieg Larsson",978-0307269751,2005,"Mystery",19,12.80
+B014,"The Alchemist","Paulo Coelho",978-0061122415,1988,"Philosophical Fiction",21,10.50
+B015,"Sapiens: A Brief History of Humankind","Yuval Noah Harari",978-0062316097,2014,"Non-fiction",16,18.99
+B016,"The Silent Patient","Alex Michaelides",978-1250301697,2019,"Thriller",23,13.50
+B017,"Where the Crawdads Sing","Delia Owens",978-0735219090,2018,"Fiction",27,14.25
+B018,"Atomic Habits","James Clear",978-0735211292,2018,"Self-help",35,15.75
+B019,"Project Hail Mary","Andy Weir",978-0593135204,2021,"Science Fiction",20,17.00
+B020,"The Midnight Library","Matt Haig",978-0525559474,2020,"Fantasy",22,12.50
+B021,"Educated","Tara Westover",978-0399590504,2018,"Memoir",15,16.20
+B022,"Circe","Madeline Miller",978-0316556343,2018,"Mythology",18,13.80
