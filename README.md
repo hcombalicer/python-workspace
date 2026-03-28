@@ -1,8 +1,10 @@
 # python-workspace
+
 [![Lint Code Base](https://github.com/hcombalicer/python-workspace/actions/workflows/super-linter.yml/badge.svg?branch=main)](https://github.com/hcombalicer/python-workspace/actions/workflows/super-linter.yml)
 Python Codes for Google Workspace
 
 ## Developing in codespace
+
 1. Make sure you are on the `main` branch (or the branch you want to branch off from):
 `git checkout main`
 2. Create and switch to the new branch:
@@ -18,6 +20,7 @@ Python Codes for Google Workspace
 ## Developing locally
 
 ## Pre-commit configuration
+
 1. Create the file: Create a file named `.pre-commit-config.yaml` in the root directory of your GitHub repository. ([sample](.pre-commit-config.yaml))
 2. Install `pre-commit`:
 `pip install pre-commit`

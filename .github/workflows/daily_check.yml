@@ -1,9 +1,9 @@
-name: Daily Exchange Rate Check
+name: Daily Automation
 
 on:
   schedule:
-    # Runs at 1:00 PM UTC (9:00 PM Manila)
-    - cron: '0 13 * * *'
+    # Runs every 3 hours from 9 AM to 10 PM Manila Time (UTC+8)
+    - cron: '0 1-14/3 * * *'
   workflow_dispatch:
 
 jobs:
@@ -19,20 +19,27 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        # This command looks for your requirements.txt file
+        # Installs dependencies for both projects
         run: |
           python -m pip install --upgrade pip
           pip install -r automation/exchange_rate/requirements.txt
+          pip install -r automation/task_notifier/requirements.txt
 
-      - name: Run Tests
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python automation/exchange_rate/main.py test
+      - name: Decode Google Token
+        # Recreates the token.json needed for the Task Notifier
+        run: echo "${{ secrets.NOTIFIER_GOOGLE_TOKEN_BASE64 }}" | base64 --decode > token.json
 
-      - name: Run Alert Script
+      - name: Run Exchange Rate Alert
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        # Pass your threshold here
+          # Pass the threshold here
         run: python automation/exchange_rate/main.py --threshold 58.0
+
+      - name: Run Task Notifier
+        # Runs the overdue tasks script
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python automation/task_notifier/notifier.py
