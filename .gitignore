@@ -1,2 +1,6 @@
 .venv
 .pre-commit-config.yaml
+credentials.json
+token.json
+.DS_Store
+__pycache__
