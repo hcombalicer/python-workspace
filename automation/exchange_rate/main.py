@@ -44,10 +44,10 @@ def get_exchange_rate() -> Optional[float]:
         # The client automatically looks for an environment variable named GEMINI_API_KEY
         client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
         response = client.models.generate_content(
-            model="gemini-3-flash-preview",  # Use the latest stable model
+            model="gemini-2.5-flash",  # Free Version
             contents="What is the current 1 USD to PHP exchange rate? Return only the number.",
             config={
-                "tools": [{"google_search": {}}]  # Use Google Search for grounding
+                "tools": [{"google_search": {}}],  # Use Google Search for grounding
             },
         )
         # New SDK uses response.text
