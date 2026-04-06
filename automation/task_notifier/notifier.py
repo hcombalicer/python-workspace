@@ -5,6 +5,7 @@ A script to fetch overdue tasks from a specific Google Task list ('Important')
 and send reminders via a Telegram Bot. Designed to run as a GitHub Action.
 """
 
+import json
 import os
 import time
 from datetime import datetime, timezone
@@ -17,25 +18,29 @@ from googleapiclient.discovery import build
 
 def get_tasks_service():
     """
-    Authenticates with Google using the token.json file and initializes
-    the Google Tasks API service. Handles automatic token refreshment.
-
-    Returns:
-        googleapiclient.discovery.Resource: An authorized Google Tasks service object.
-
-    Raises:
-        FileNotFoundError: If the token.json file is missing.
+    Authenticates using a token stored in an environment variable.
+    This avoids the 'read-only' file issue in GitHub Actions.
     """
-    token_path = "token.json"
-    if not os.path.exists(token_path):
-        raise FileNotFoundError(
-            "token.json not found. Ensure GitHub Secret is configured."
-        )
+    # Load token from environment variable instead of a local file
+    token_json = os.getenv("GOOGLE_TOKEN_JSON")
 
-    creds = Credentials.from_authorized_user_file(token_path)
-    # Refresh the access token using the refresh_token if it has expired
+    if not token_json:
+        raise ValueError("GOOGLE_TOKEN_JSON environment variable is empty.")
+
+    # Parse the JSON string into a dictionary
+    token_data = json.loads(token_json)
+    creds = Credentials.from_authorized_user_info(token_data)
+
     if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
+        try:
+            creds.refresh(Request())
+            # Logic Note: In a professional CI/CD, we would log that a refresh
+            # occurred. If this keeps failing, you need to manually re-gen
+            # the token once more after setting the project to 'Production'.
+        except Exception as e:
+            print(f"Failed to refresh token: {e}")
+            raise
+
     return build("tasks", "v1", credentials=creds)
 
 
