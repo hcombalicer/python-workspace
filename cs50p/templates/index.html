@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shortcut Manager</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #f4f7f6; color: #333; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .form-section { background: #eef2f3; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+        input { padding: 10px; margin-right: 10px; border: 1px solid #ccc; border-radius: 4px; width: 200px; }
+        button { padding: 10px 20px; background-color: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #219150; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f8f9fa; }
+        .btn-delete { background-color: #e74c3c; padding: 5px 10px; font-size: 12px; }
+        .btn-delete:hover { background-color: #c0392b; }
+        .btn-go { text-decoration: none; color: #3498db; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Shortcut Dashboard</h1>
+
+        <div class="form-section">
+            <h3>Add New Shortcut</h3>
+            <form action="/add" method="post">
+                <input type="text" name="key" placeholder="Keyword (e.g. gh)" required>
+                <input type="url" name="url" placeholder="https://github.com/..." required>
+                <button type="submit">Add</button>
+            </form>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Keyword</th>
+                    <th>Destination</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, url in shortcuts.items() %}
+                <tr>
+                    <td><strong>{{ key }}</strong></td>
+                    <td><a href="/{{ key }}" class="btn-go" target="_blank">{{ url }}</a></td>
+                    <td>
+                        <form action="/delete/{{ key }}" method="post" style="display:inline;">
+                            <button type="submit" class="btn-delete" onclick="return confirm('Delete this shortcut?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
