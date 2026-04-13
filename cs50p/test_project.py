@@ -81,12 +81,18 @@ def test_add_shortcut_route(client):
     Expectation: A POST request to '/add' should return a 302 Redirect
     and successfully write the new key-value pair to the JSON file.
     """
+    with client.session_transaction() as sess:
+        sess["csrf_token"] = "test-token"
+
     response = client.post(
-        "/add", data={"key": "cs50", "url": "https://cs50.harvard.edu"}
+        "/add",
+        data={
+            "key": "cs50",
+            "url": "https://cs50.harvard.edu",
+            "csrf_token": "test-token",
+        },
     )
-
     assert response.status_code == 302
-
     data = load_shortcuts()
     assert data["cs50"] == "https://cs50.harvard.edu"
 
@@ -129,11 +135,67 @@ def test_delete_shortcut_route(client):
     Expectation: A POST request to '/delete/<key>' should return a 302 Redirect
     and completely remove the target key from the JSON file.
     """
-    save_shortcuts({"removeme": "https://badwebsite.com"})
+    save_shortcuts({"removeme": "[badwebsite.com](https://badwebsite.com)"})
 
-    response = client.post("/delete/removeme")
+    # First, get a session with a CSRF token
+    with client.session_transaction() as sess:
+        sess["csrf_token"] = "test-token"
+
+    response = client.post("/delete/removeme", data={"csrf_token": "test-token"})
 
     assert response.status_code == 302
-
     data = load_shortcuts()
     assert "removeme" not in data
+
+
+def test_add_shortcut_invalid_url(client):
+    """Test that invalid URLs are rejected."""
+    with client.session_transaction() as sess:
+        sess["csrf_token"] = "test-token"
+
+    response = client.post(
+        "/add",
+        data={"key": "bad", "url": "javascript:alert(1)", "csrf_token": "test-token"},
+    )
+    assert response.status_code == 400
+
+
+def test_add_shortcut_missing_fields(client):
+    """Test handling of missing form fields."""
+    with client.session_transaction() as sess:
+        sess["csrf_token"] = "test-token"
+
+    response = client.post("/add", data={"csrf_token": "test-token"})
+    assert response.status_code in (302, 400)  # Depends on your error handling choice
+
+
+def test_router_not_found(client):
+    """Test 404 response for unknown shortcuts."""
+    response = client.get("/nonexistent")
+    assert response.status_code == 404
+
+
+def test_delete_nonexistent_shortcut(client):
+    """Test deleting a shortcut that doesn't exist."""
+    with client.session_transaction() as sess:
+        sess["csrf_token"] = "test-token"
+
+    response = client.post("/delete/doesnotexist", data={"csrf_token": "test-token"})
+    assert response.status_code == 302  # Should still redirect gracefully
+
+
+def test_delete_without_csrf_token(client):
+    """Test that delete without CSRF token is rejected."""
+    save_shortcuts({"protected": "[example.com](https://example.com)"})
+
+    response = client.post("/delete/protected")
+    assert response.status_code == 403
+
+
+def test_load_shortcuts_corrupted_json(client, tmp_path, monkeypatch):
+    """Test handling of corrupted JSON file."""
+    test_file = tmp_path / "test_shortcuts.json"
+    test_file.write_text("{invalid json")
+    monkeypatch.setattr("project.DATA_FILE", str(test_file))
+
+    assert load_shortcuts() == {}

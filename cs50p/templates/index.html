@@ -26,6 +26,7 @@
         <div class="form-section">
             <h3>Add New Shortcut</h3>
             <form action="/add" method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                 <input type="text" name="key" placeholder="Keyword (e.g. gh)" required>
                 <input type="url" name="url" placeholder="https://github.com/..." required>
                 <button type="submit">Add</button>
@@ -47,6 +48,7 @@
                     <td><a href="/{{ key }}" class="btn-go" target="_blank">{{ url }}</a></td>
                     <td>
                         <form action="/delete/{{ key }}" method="post" style="display:inline;">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                             <button type="submit" class="btn-delete" onclick="return confirm('Delete this shortcut?')">Delete</button>
                         </form>
                     </td>
