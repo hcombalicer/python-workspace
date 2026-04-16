@@ -1,6 +1,6 @@
 # Shortcut Router
 
-## Video Demo: https://youtu.be/vhpELrOA6fc
+## [Video Demo](https://youtu.be/vhpELrOA6fc)
 
 ## Description
 
