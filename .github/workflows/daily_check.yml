@@ -32,7 +32,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           EXCHANGE_RATE: ${{ secrets.EXCHANGE_RATE }}
           # Pass the threshold here
-        run: python automation/exchange_rate/exchange_rate.py --threshold $EXCHANGE_RATE
+        run: python automation/exchange_rate/exchange_rate.py --threshold "$EXCHANGE_RATE"
 
       - name: Run Task Notifier
         # Runs the overdue tasks script
