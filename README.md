@@ -1,7 +1,7 @@
 # python-workspace
 
-[![Lint Code Base](https://github.com/hcombalicer/python-workspace/actions/workflows/super-linter.yml/badge.svg?branch=main)](https://github.com/hcombalicer/python-workspace/actions/workflows/super-linter.yml)
-Python Codes for Google Workspace
+[![Deployment](https://github.com/hcombalicer/python-workspace/actions/workflows/deployment.yml/badge.svg?branch=main)](https://github.com/hcombalicer/python-workspace/actions/workflows/deployment.yml)
+[![Daily Workflow](https://github.com/hcombalicer/python-workspace/actions/workflows/daily_check.yml/badge.svg?branch=main)](https://github.com/hcombalicer/python-workspace/actions/workflows/daily_check.yml)
 
 ## Developing in codespace
 
