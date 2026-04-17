@@ -23,6 +23,8 @@ jobs:
 
   automerge:
       needs: run-lint
+      # Only run if it's a PR AND the target branch is 'main'
+      if: github.event_name == 'pull_request' && github.base_ref == 'main'
       runs-on: ubuntu-latest
       permissions:
         pull-requests: write
