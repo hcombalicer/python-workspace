@@ -30,7 +30,7 @@ jobs:
           FXRATESAPI_KEY: ${{ secrets.FXRATESAPI_KEY }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          EXCHANGE_RATE: ${{ env.EXCHANGE_RATE }}
+          EXCHANGE_RATE: ${{ secrets.EXCHANGE_RATE }}
           # Pass the threshold here
         run: python automation/exchange_rate/exchange_rate.py --threshold $EXCHANGE_RATE
 
