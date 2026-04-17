@@ -2,19 +2,19 @@
 Exchange Rate Monitor and Alerter
 
 This script automates the monitoring of the USD to PHP exchange rate using
-the Gemini API's web-grounding capabilities. It compares the current rate
+fxratesapi.com API. It compares the current rate
 against a user-defined threshold and sends a notification via Telegram
 if the condition is met.
 
 Usage:
     # Run tests
-    python automation/exchange_rate/main.py test
+    python automation/exchange_rate/exchange_rate.py test
 
     # Run the monitor with a custom threshold
-    python automation/exchange_rate/main.py --threshold 58.0
+    python automation/exchange_rate/exchange_rate.py --threshold 58.0
 
 Environment Variables:
-    GEMINI_API_KEY: Your Google AI Studio API key.
+    FXRATESAPI_KEY: Your fxratesapi.com API token.
     TELEGRAM_TOKEN: Your Telegram Bot API token from @BotFather.
     TELEGRAM_CHAT_ID: Your unique Telegram chat ID.
 """
@@ -25,36 +25,50 @@ import sys
 import unittest
 from typing import Optional
 
+import requests
 import telebot
-from google import genai
 
 
 def get_exchange_rate() -> Optional[float]:
     """
-    Fetches the current USD to PHP exchange rate using Gemini AI.
+    Fetches the current USD to PHP exchange rate using fxratesapi.com.
 
-    Utilizes the generative model with search grounding to retrieve
-    the most recent market rate.
+    Retrieves the API key from the FXRATESAPI_KEY environment variable.
 
     Returns:
         float: The current exchange rate as a number (e.g., 58.12).
         None: If the API call fails or the response is non-numeric.
     """
     try:
-        # The client automatically looks for an environment variable named GEMINI_API_KEY
-        client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",  # Free Version
-            contents="What is the current 1 USD to PHP exchange rate? Return only the number.",
-            config={
-                "tools": [{"google_search": {}}],  # Use Google Search for grounding
-            },
-        )
-        # New SDK uses response.text
-        rate_text = response.text.strip()
-        return float(rate_text)
+        api_key = os.environ.get("FXRATESAPI_KEY")
+        if not api_key:
+            print("Error: FXRATESAPI_KEY environment variable not set.")
+            return None
+
+        headers = {"Authorization": api_key}
+        url = "https://api.fxratesapi.com/latest"
+        params = {
+            "base": "USD",
+            "currencies": "PHP",
+            "resolution": "1m",
+            "amount": "1",
+            "places": "6",
+            "format": "json",
+        }
+        response = requests.get(url, params=params, headers=headers, timeout=10)
+        response.raise_for_status()  # Raise an exception for HTTP errors
+
+        data = response.json()
+        rate = data["rates"]["PHP"]
+        return float(rate)
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching rate from API: {e}")
+        return None
+    except KeyError:
+        print("Error: Could not parse exchange rate from API response.")
+        return None
     except Exception as e:
-        print(f"Error fetching rate: {e}")
+        print(f"An unexpected error occurred: {e}")
         return None
 
 

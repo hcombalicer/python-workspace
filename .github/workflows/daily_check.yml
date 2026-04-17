@@ -27,11 +27,11 @@ jobs:
 
       - name: Run Exchange Rate Alert
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          FXRATESAPI_KEY: ${{ secrets.FXRATESAPI_KEY }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           # Pass the threshold here
-        run: python automation/exchange_rate/main.py --threshold 58.0
+        run: python automation/exchange_rate/exchange_rate.py --threshold ${{ env.EXCHANGE_RATE }}
 
       - name: Run Task Notifier
         # Runs the overdue tasks script
