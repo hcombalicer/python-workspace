@@ -1,0 +1,4 @@
+functions-framework==3.*
+google-cloud-billing
+cloudevents
+google-cloud-logging

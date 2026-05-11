@@ -1,0 +1,56 @@
+name: Deploy GCP Billing Automation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'gcp_billing_automation/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r gcp_billing_automation/requirements.txt
+          pip install pytest mock
+
+      - name: Run unit test
+        run: pytest gcp_billing_automation/test_*.py
+
+      - name: Google Auth
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: 'projects/290248671238/locations/global/workloadIdentityPools/github/providers/my-repo'
+          service_account: 'github-automation-deployer@prefab-century-404912.iam.gserviceaccount.com'
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Deploy Cloud Run Function
+        run: |
+          gcloud functions deploy gcp_billing_test \
+            --gen2 \
+            --runtime=python312 \
+            --region=asia-east1 \
+            --source=./gcp_billing_automation/ \
+            --entry-point=stop_gcp_billing \
+            --trigger-topic=billing-alerts \
+            --service-account=billing-automation@prefab-century-404912.iam.gserviceaccount.com \
+            --max-instances=1
