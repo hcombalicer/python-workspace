@@ -50,7 +50,7 @@ jobs:
             --runtime=python312 \
             --region=asia-east1 \
             --source=./gcp_billing_automation/ \
-            --entry-point=stop_gcp_billing \
+            --entry-point=stop_billing \
             --trigger-topic=billing-alerts \
             --service-account=billing-automation@prefab-century-404912.iam.gserviceaccount.com \
             --max-instances=1
