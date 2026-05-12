@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'gcp_billing_automation/**'
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -45,7 +46,7 @@ jobs:
 
       - name: Deploy Cloud Run Function
         run: |
-          gcloud functions deploy gcp_billing_test \
+          gcloud functions deploy gcp_billing \
             --gen2 \
             --runtime=python312 \
             --region=asia-east1 \
