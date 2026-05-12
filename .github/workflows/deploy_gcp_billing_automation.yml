@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'gcp_billing_automation/**'
+  workflow_dispatch:
 
 jobs:
   deploy:
