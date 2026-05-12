@@ -1,0 +1,19 @@
+{
+  "specversion": "1.0",
+  "id": "1234567890123456",
+  "source": "//pubsub.googleapis.com/projects/my-project/topics/billing-alerts",
+  "type": "google.cloud.pubsub.topic.v1.messagePublished",
+  "datacontenttype": "application/json",
+  "time": "2026-05-09T14:00:00.000Z",
+  "data": {
+    "message": {
+      "data": "eyJidWRnZXREaXNwbGF5TmFtZSI6ICJNeSBNb250aGx5IEJ1ZGdldCIsICJjb3N0QW1vdW50IjogOTAuMDIsICJjb3N0SW50ZXJ2YWxTdGFydCI6ICIyMDI2LTA1LTAxVDAwOjAwOjAwWiIsICJidWRnZXRBbW91bnQiOiAxMDAuMCwgImJ1ZGdldEFtb3VudFR5cGUiOiAiU1BFQ0lGSUVEX0FNT1VOVCIsICJhbGVydFRocmVzaG9sZEV4Y2VlZGVkIjogMC45LCAiY3VycmVuY3lDb2RlIjogIlVTRCJ9",
+      "messageId": "987654321",
+      "publishTime": "2026-05-09T13:59:59.000Z",
+      "attributes": {
+        "billingAccountId": "010101-F0F0F0-ABABAB",
+        "schemaVersion": "1.0"
+      }
+    }
+  }
+}

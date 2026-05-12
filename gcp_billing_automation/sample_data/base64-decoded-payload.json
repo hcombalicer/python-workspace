@@ -1,0 +1,21 @@
+[
+  {
+    "budgetDisplayName": "My Monthly Budget",
+    "costAmount": 90.02,
+    "costIntervalStart": "2026-05-01T00:00:00Z",
+    "budgetAmount": 100.0,
+    "budgetAmountType": "SPECIFIED_AMOUNT",
+    "alertThresholdExceeded": 0.9,
+    "currencyCode": "USD"
+  },
+  {
+    "budgetDisplayName": "My Monthly Threshold",
+    "costAmount": 405.50,
+    "costIntervalStart": "2026-05-01T00:00:00Z",
+    "budgetAmount": 100.0,
+    "budgetAmountType": "SPECIFIED_AMOUNT",
+    "alertThresholdExceeded": 1.0,
+    "forecastThresholdExceeded": 1.0,
+    "currencyCode": "USD"
+  }
+]
