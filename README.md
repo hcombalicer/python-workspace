@@ -2,12 +2,13 @@
 
 [![Deployment](https://github.com/hcombalicer/python-workspace/actions/workflows/deployment.yml/badge.svg?branch=main)](https://github.com/hcombalicer/python-workspace/actions/workflows/deployment.yml)
 [![Daily Workflow](https://github.com/hcombalicer/python-workspace/actions/workflows/daily_check.yml/badge.svg?branch=main)](https://github.com/hcombalicer/python-workspace/actions/workflows/daily_check.yml)
+[![GCP Billing Automation](https://github.com/hcombalicer/python-workspace/actions/workflows/deploy_gcp_billing_automation.yml/badge.svg?branch=main)](https://github.com/hcombalicer/python-workspace/blob/main/.github/workflows/deploy_gcp_billing_automation.yml)
 
 ## GCP Billing Automation
 
 `gcp_billing_automation` contains a Google Cloud Function that listens for budget alert events and disables billing for the project where the function is deployed when the reported cost exceeds the configured budget amount.
 
-### What it does
+### What GCP Billing Automation does
 
 1. Receives a budget alert event from Pub/Sub.
 2. Decodes the event payload and reads `costAmount` and `budgetAmount`.
@@ -26,7 +27,7 @@ Local test command:
 pytest gcp_billing_automation/test_*.py
 ```
 
-### Architecture diagram
+### Runtime Architecture Diagram
 
 ```mermaid
 flowchart TD
@@ -45,8 +46,46 @@ flowchart TD
     M --> N[Cloud Logging: CRITICAL Entry]
 ```
 
-### Key files
+### Deployment Diagram
 
-- [gcp_billing_automation/main.py](gcp_billing_automation/main.py) contains the Cloud Function and billing logic.
-- [gcp_billing_automation/test_main.py](gcp_billing_automation/test_main.py) contains the pytest unit tests.
-- [gcp_billing_automation/sample_data](gcp_billing_automation/sample_data/) contains example event payloads for reference.
+```mermaid
+graph LR
+    A[Developer push or PR to main] --> B{GitHub repository}
+    B --> C[GitHub Actions workflow]
+    C --> D[Checkout Code]
+    D --> E[Setup Python Environment]
+    E --> F[Install dependencies with pip]
+    F --> G[Run unit tests with pytest]
+    G -- Tests pass --> H[Authenticate to GCP]
+    H --> I[Deploy Cloud Function Gen 2]
+    I --> J[Google Cloud Platform]
+    G -- Tests fail --> K[Halt deployment]
+```
+
+## Task Notifier
+
+`task_notifier` is a Python script designed to help users stay on top of their important Google Tasks by sending timely reminders to a Telegram chat. It integrates with Google Tasks to identify overdue items and uses the Telegram Bot API for notifications. This script is intended to be run periodically, for instance, via a scheduled GitHub Action.
+
+### What Task Notifier does
+
+1. **Authenticates with Google Tasks**: Securely connects to the Google Tasks API using credentials provided via environment variables.
+2. **Identifies Overdue Tasks**: Fetches tasks from a designated Google Task list (e.g., "Important") and filters for tasks that have passed their due date.
+3. **Sends Telegram Notifications**: For each overdue task, it composes a reminder message and sends it to a specified Telegram chat via the Telegram Bot API.
+
+### High-Level Architecture
+
+```mermaid
+graph TD
+    A[Scheduled GitHub Action] --> B[notifier.py script]
+    B --> C[Google Tasks API]
+    C -- Overdue tasks --> B
+    B --> D[Telegram Bot API]
+    D -- Notifications --> E[Telegram user]
+
+    subgraph Credentials and Configuration
+        F[Environment variables]
+        F -- GOOGLE_TOKEN_JSON --> B
+        F -- TELEGRAM_TOKEN --> B
+        F -- TELEGRAM_CHAT_ID --> B
+    end
+```
