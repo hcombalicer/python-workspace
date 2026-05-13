@@ -50,16 +50,16 @@ flowchart TD
 
 ```mermaid
 graph LR
-    A[Developer Push/PR to `main`] --> B{GitHub Repository (gcp_billing_automation/)}
-    B --> C[GitHub Actions Workflow: deploy_gcp_billing_automation.yml]
+    A[Developer push or PR to main] --> B{GitHub repository}
+    B --> C[GitHub Actions workflow]
     C --> D[Checkout Code]
     D --> E[Setup Python Environment]
-    E --> F[Install Dependencies (pip)]
-    F --> G[Run Unit Tests (pytest)]
-    G -- Tests Pass --> H[Authenticate to GCP (Workload Identity Federation)]
-    H --> I[Deploy Cloud Function (Gen 2)]
+    E --> F[Install dependencies with pip]
+    F --> G[Run unit tests with pytest]
+    G -- Tests pass --> H[Authenticate to GCP]
+    H --> I[Deploy Cloud Function Gen 2]
     I --> J[Google Cloud Platform]
-    G -- Tests Fail --> K[Notify Developer / Halt Deployment]
+    G -- Tests fail --> K[Halt deployment]
 ```
 
 ## Task Notifier
@@ -76,14 +76,14 @@ graph LR
 
 ```mermaid
 graph TD
-    A[Scheduled GitHub Action] --> B[notifier.py Script]
+    A[Scheduled GitHub Action] --> B[notifier.py script]
     B --> C[Google Tasks API]
-    C -- Overdue Tasks --> B
+    C -- Overdue tasks --> B
     B --> D[Telegram Bot API]
-    D -- Notifications --> E[User (Telegram)]
+    D -- Notifications --> E[Telegram user]
 
-    subgraph Credentials/Configuration
-        F[Environment Variables]
+    subgraph Credentials and Configuration
+        F[Environment variables]
         F -- GOOGLE_TOKEN_JSON --> B
         F -- TELEGRAM_TOKEN --> B
         F -- TELEGRAM_CHAT_ID --> B
